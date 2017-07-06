@@ -1,0 +1,89 @@
+<html>
+<head>
+
+<script src="jquery-3.2.1.min.js"></script>
+<script>
+function a()
+{
+
+var e="DD";
+xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+	 
+   ca(this.responseText);
+  }
+} 
+xhttp.open("POST", "/admin", true);
+xhttp.send(e);
+
+
+}
+
+function ca(f)
+{
+console.log(f);
+var g11=f;
+var c11= g11.replace("=", ":");
+c12=JSON.parse(c11);
+var obj=new Object();
+	
+
+for(var i=0;i<c12.length;i++)
+{
+	var t=0;
+
+	
+ var table = document.getElementById("myt1");
+    var row = table.insertRow();
+    var cell1 = row.insertCell(0);
+    var cell2 =row.insertCell(1);
+  var cell3=row.insertCell(2);
+    cell1.innerHTML ="<p class='load'>"+ c12[i].properties.title+"</p>";
+    cell2.innerHTML ="<p class='load'>" +c12[i].properties.content+"<p>";
+    obj=c12[i].properties.seat;
+for(var j=0;j<300;j++)
+	{
+	if(obj[j]=="")
+		{
+		t++;
+		}
+	}
+cell3.innerHTML="<p class='load'>"+t+"</p>";
+
+  }
+}
+$(document).on("click",".load",function(){
+var one=$(this).text();
+console.log("This is the user clicked loaded function"+one);
+window.location.href = "show2?flag="+one;
+});
+</script>
+</head>
+<body onload="a()">
+<a href="index.html">Main Page</a>
+<br><br><br>
+<div class="full">
+
+<div class="f1">
+<div align="center">
+<p>Click Any auditorium</p></div>
+<table id="myt1" style="width:100%" border="1">
+
+  <tr>
+    <th>Title</th>
+    <th>content</th>
+    <th>left seat</th>
+
+   
+  </tr>
+</table>
+<div class="f11">
+</div>
+
+
+</div>
+</div>
+
+</body>
+</html>

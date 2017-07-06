@@ -1,0 +1,89 @@
+<html>
+<head>
+<script src="jquery-3.2.1.min.js"></script>
+
+<script>
+function on()
+{
+var e="DD";
+xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+	 
+   ca(this.responseText);
+  }
+} 
+xhttp.open("POST", "/admin", true);
+xhttp.send(e);
+}
+function ca(f)
+{
+console.log(f);
+var g11=f;
+var c11= g11.replace("=", ":");
+c12=JSON.parse(c11);
+for(var i=0;i<c12.length;i++)
+{
+
+ var table = document.getElementById("myt1");
+    var row = table.insertRow();
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3=row.insertCell(2);
+    cell1.innerHTML = c12[i].properties.title;
+    cell2.innerHTML =c12[i].properties.content;
+    cell3.innerHTML="<button align='center' href='#' class='load'>"+c12[i].properties.title+"</button>";
+	}
+}
+$(document).on("click",".load",function(){
+var one=$(this).text();
+console.log("this is the data--"+one);
+
+
+xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+	 
+   ca(this.responseText);
+  }
+} 
+xhttp.open("GET", "/create?key="+one, true);
+xhttp.send(null);
+
+});
+</script>
+</head>
+
+<body onload="on()">
+<div class="full">
+<a href="index.html">Main Page</a>
+<div class="head">
+<p align="right">
+<input type="button" value="New show" onclick="window.location.href='/show.html';"/>
+  
+
+</p>
+
+</div>
+<div class="body">
+<br>
+<div align="center">
+<div  id="a22"></div>
+
+<p>InOrder to delete an element click the delete row specific button and referesh the page</p>
+<table id="myt1" style="width:100%" border="1">
+
+  <tr>
+    <th>Title</th>
+    <th>content</th>
+    <th>Delete</th>
+   
+  </tr>
+</table>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>

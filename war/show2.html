@@ -1,0 +1,183 @@
+<html>
+<head>
+<style>
+
+.seats {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;  
+}
+li
+{
+width:70;
+float:left;
+}
+
+.seat {
+  display: flex;
+  flex: 0 0 6.7%;
+  padding: 5px;
+  position: relative;  
+  &:nth-child(3) {
+    margin-right: 14.28571428571429%;
+  }
+</style>
+<script src="jquery-3.2.1.min.js"></script>
+
+<script>
+function full(){
+
+var e="DD";
+xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+	 
+   seat1(this.responseText);
+  }
+} 
+xhttp.open("POST", "/show2", true);
+xhttp.send(e);
+}
+function seat1(t)
+{
+	var okp=new Object;
+	okp=JSON.parse(t);
+var df=okp[0].properties.seat;
+console.log(df+"----"+df[0]);
+	//this is going to handle 
+	//provide dynamic seat depending the data(t) by which this going to check whether 
+	//particular number is there are not 
+	//if the particular seat is empty than provide one set of image if it is not empty provide other set of image 
+	//add the other element into the data store
+	var k=0;var alp=64;
+	 $("#k1").append("<ol class='cabin fuselage'>");
+	 
+	for(var i=0;i<300;i++)
+		{
+	if(df[i]=="")
+		{
+		if(i%15==0||i==0)
+		{alp++;
+			if(i%15==0)
+				{l1=0;
+				$("#k1").append("<li class='row row--'><ol class='seats' ><li class='seat'> </li></ol>");
+				}
+			
+			$("#k1").append("<li class='seat'> <input type='checkbox' onclick='g("+i+")' id='1'"+String.fromCharCode(alp)+"/><label for='1A'>"+l1+String.fromCharCode(alp)+"</label></li>");
+			l1++;
+	k++;
+		}
+		else
+			{
+			$("#k1").append("<li class='seat'> <input type='checkbox' onclick='g("+i+")' id='1'"+String.fromCharCode(alp)+"/><label for='1A'>"+l1+String.fromCharCode(alp)+"</label></li>");
+		l1++;
+			}
+		
+		
+		}
+	else
+		{
+		if(i%15==0||i==0)
+		{alp++;
+			if(i%15==0)
+				{l1=0;
+				$("#k1").append("<li class='row row--'><ol class='seats' ><li class='seat'> </li></ol>");
+				}
+			
+			$("#k1").append("<li class='seat'> <input type='checkbox' disabled id='1'"+String.fromCharCode(alp)+"/><label for='1A'>"+l1+String.fromCharCode(alp)+"</label></li>");
+			l1++;
+	k++;
+		}
+		else
+			{
+			$("#k1").append("<li class='seat'> <input type='checkbox'  disabled id='1'"+String.fromCharCode(alp)+"/><label for='1A'>"+l1+String.fromCharCode(alp)+"</label></li>");
+		l1++;
+			}
+		
+		}
+		}
+		
+		
+	 $("#k1").append("</ol>");
+		
+	
+	
+	}
+	var g21=new Array();
+	var g3=new Array();
+	function g(u)
+	{
+		var f=g3.indexOf(u);
+	console.log(f);
+		if(f==-1)
+			{
+			g3.push(u);
+			}
+		else
+			{
+		delete g3[f];
+			}
+	
+		
+	}
+	function l()
+	{var kj=0;
+		var cf=confirm("the ticket seates are "+g3);
+		if(cf==true)
+			{
+			for(var j=0;j<g3.length;j++)
+				{
+				if(g3[j]!=undefined)
+			{
+			g21[kj]=g3[j];kj++;
+			}	
+			}
+
+
+			h(g21);
+			
+			}
+		else
+			{
+			console.log("Ticket is not booked");
+			}
+	}
+	function h(u1)
+	{
+
+		var e="DD";
+		xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		  if (this.readyState == 4 && this.status == 200) {
+			 
+		   j(this.responseText);
+		  }
+		} 
+		xhttp.open("POST", "/update?store="+u1, true);
+		xhttp.send(e);	
+	}
+	
+	function j(h)
+	{
+		window.location.href = "show2.html";
+		
+	}
+</script>
+</head>
+<body onload="full()">
+<div id="full1">
+<p>This is the para tag</p>
+<br><button onclick="l()">BUY</button>
+<button float="right" onclick="window.location.href='index.html'">logout</button>
+<br>
+<br><br>
+<div id="body">
+ <ol class="cabin fuselage">
+    <div id="k1" ></div>
+       
+        </ol>
+</div>
+</div>
+</body>
+</html>
